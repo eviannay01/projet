@@ -15,18 +15,18 @@ import java.awt.Color;
  */
 public class Barre {
     private int idBarre;
-    private Noeud debut;
-    private Noeud fin;
-    private TypeBarre type;
+    private int debut;
+    private int fin;
+    private int idType;
     private Color couleur;
     
     //Constructeur
 
-    public Barre(int idBarre, Noeud debut, Noeud fin, TypeBarre type) {
+    public Barre(int idBarre, int debut, int fin, int idType) {
         this.idBarre = idBarre;
         this.debut = debut;
         this.fin = fin;
-        this.type = type;
+        this.idType = idType;
         this.couleur=Color.blue;
     }
   
@@ -40,28 +40,28 @@ public class Barre {
         this.idBarre = idBarre;
     }
 
-    public Noeud getDebut() {
+    public int getDebut() {
         return debut;
     }
 
-    public void setDebut(Noeud debut) {
+    public void setDebut(int debut) {
         this.debut = debut;
     }
 
-    public Noeud getFin() {
+    public int getFin() {
         return fin;
     }
 
-    public void setFin(Noeud fin) {
+    public void setFin(int fin) {
         this.fin = fin;
     }
 
-    public TypeBarre getType() {
-        return type;
+    public int getIdType() {
+        return idType;
     }
 
-    public void setType(TypeBarre type) {
-        this.type = type;
+    public void setIdType(int idType) {
+        this.idType = idType;
     }
     
     
@@ -69,6 +69,9 @@ public class Barre {
 
     @Override
     public String toString() {
-        return "Barre ; " + idBarre + " ; " + this.debut.getIdNoeud() + " ; " + this.fin.getIdNoeud() + " ; " + this.type.getIdType();
+        return "Barre ; " + this.getIdBarre() + " ; " + this.getDebut() + " ; " + this.getFin() + " ; " + this.getIdType();
     }
+    
+    
+    
 }

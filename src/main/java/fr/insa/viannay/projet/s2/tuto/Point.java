@@ -18,7 +18,6 @@ along with CoursBeuvron.  If not, see <http://www.gnu.org/licenses/>.
  */
 package fr.insa.viannay.projet.s2.tuto;
 
-import fr.insa.viannay.projet.s2.tuto.gui.Numeroteur;
 import java.io.IOException;
 import java.io.Writer;
 import javafx.scene.canvas.GraphicsContext;
@@ -138,6 +137,10 @@ public class Point extends FigureSimple {
             w.append("Point;"+id+";"+this.px+";"+this.py+
                     ";" + FigureSimple.saveColor(this.getCouleur()) + "\n");
         }
+    }
+
+    public double getX() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

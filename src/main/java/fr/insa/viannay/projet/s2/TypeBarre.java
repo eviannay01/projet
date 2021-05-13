@@ -11,7 +11,7 @@ package fr.insa.viannay.projet.s2;
  * @author viann
  */
 public class TypeBarre {
-     private int idType;
+    private int idType;
     private double cout;
     private double lmin;
     private double lmax;
@@ -88,4 +88,6 @@ public class TypeBarre {
     public String toString() {
         return "TypeBarre ; " + idType + " ; " + cout + " ; " + lmin + " ; " + lmax + " ; " + maxTension + " ; " + maxCompression;
     }
+    
+            
 }

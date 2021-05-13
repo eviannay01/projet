@@ -15,40 +15,29 @@ import java.awt.Color;
  */
 public class NoeudSimple extends Noeud {
     
-    protected Point pointNoeud;
     private Color couleur;
     
     
     //Constructeur
-    public NoeudSimple(int idNoeud, Point pointNoeud){
-        super(idNoeud);
-        this.pointNoeud = pointNoeud;
+    public NoeudSimple(int idNoeud, Point positionNoeud){
+        super(idNoeud,positionNoeud);
         this.couleur=Color.pink;
-    }
-    
-    //getter et setter
-
-    public Point getPointNoeud() {
-        return pointNoeud;
-    }
-
-    public void setPointNoeud(Point pointNoeud) {
-        this.pointNoeud = pointNoeud;
     }
     
     //Affichage
 
     @Override
     public String toString() {
-        return "NoeudSimple ; " + super.getIdNoeud() + " ; " + pointNoeud ;
+        return "NoeudSimple ; " + super.getIdNoeud() + " ; " + super.getPositionNoeud().toString() ;
     }
     
     //Exemple de main
-    /*public static void main(String[]args){
-        Noeud n1= new Noeud(78);
+    public static void main(String[]args){
         Point p1= new Point (2,4.5);
-        NoeudSimple exemple = new NoeudSimple(n1.getIdNoeud(),p1);
+        Noeud n1= new Noeud(78,p1);
+        NoeudSimple exemple = new NoeudSimple(n1.getIdNoeud(),n1.getPositionNoeud());
         System.out.println(exemple.toString());
-    }*/
+    }
+    
     
 }

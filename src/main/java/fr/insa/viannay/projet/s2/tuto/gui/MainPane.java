@@ -21,11 +21,19 @@ package fr.insa.viannay.projet.s2.tuto.gui;
 
 import fr.insa.viannay.projet.s2.tuto.Groupe;
 import java.io.File;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -36,20 +44,83 @@ import javafx.stage.Stage;
  */
 public class MainPane extends BorderPane {
 
+    /**
+     * @return the rbTriangle
+     */
+    public RadioButton getRbTriangle() {
+        return rbTriangle;
+    }
+
+    /**
+     * @return the rbAppui
+     */
+    public RadioButton getRbAppui() {
+        return rbAppui;
+    }
+
+    /**
+     * @return the rbToutEffacer
+     */
+    public ToggleButton getRbToutEffacer() {
+        return rbToutEffacer;
+    }
+
+    /**
+     * @param rbToutEffacer the rbToutEffacer to set
+     */
+    public void setRbToutEffacer(ToggleButton rbToutEffacer) {
+        this.rbToutEffacer = rbToutEffacer;
+    }
+
+    /**
+     * @return the rbSupprimer
+     */
+    public ToggleButton getRbSupprimer() {
+        return rbSupprimer;
+    }
+
+    /**
+     * @return the rbGrouper
+     */
+    public ToggleButton getRbGrouper() {
+        return rbGrouper;
+    }
+
+    /**
+     * multiplicateur pour l'espace de départ : pour ne pas que les bords de la
+     * figure soit confondus avec les bords de la fenêtre, on considère que l'on
+     * veut que la fenêtre puisse contenir une figure MULT_POUR_FIT_ALL fois
+     * plus grande que la figure réelle. Par exemple, si MULT_POUR_FIT_ALL = 2,
+     * la figure complète n'occupera en fait qu'environ la moitié de la fenetre
+     * graphique.
+     */
+    private static double MULT_POUR_FIT_ALL = 1.1;
+
     private Groupe model;
     private Controleur controleur;
 
     private Stage inStage;
     private File curFile;
 
-    private RadioButton rbSelect;
+    
     private RadioButton rbPoints;
     private RadioButton rbSegments;
-
-    private Button bGrouper;
+    private RadioButton rbTriangle;
+    private RadioButton rbAppui;
+    
+    private ToggleButton rbToutEffacer;
+    private ToggleButton rbSupprimer;
+    private ToggleButton rbSelect;
+    private ToggleButton rbGrouper;
+    
     private ColorPicker cpCouleur;
 
+    private Button bZoomDouble;
+    private Button bZoomDemi;
+    private Button bZoomFitAll;
+ 
     private DessinCanvas cDessin;
+    private RectangleHV zoneModelVue;
 
     private MainMenu menu;
 
@@ -65,9 +136,10 @@ public class MainPane extends BorderPane {
         this.inStage = inStage;
         this.curFile = fromFile;
         this.model = model;
+        this.fitAll();
         this.controleur = new Controleur(this);
 
-        this.rbSelect = new RadioButton("Select");
+        this.rbSelect = new ToggleButton("Select");
         this.rbSelect.setOnAction((t) -> {
             this.controleur.boutonSelect(t);
         });
@@ -79,35 +151,118 @@ public class MainPane extends BorderPane {
         this.rbSegments.setOnAction((t) -> {
             this.controleur.boutonSegments(t);
         });
+        this.rbTriangle = new RadioButton("Triangle");
+        this.rbTriangle.setOnAction((t) -> {
+            this.controleur.boutonSegments(t);
+        });
+        this.rbAppui = new RadioButton("Appui");
+        this.rbAppui.setOnAction((t) -> {
+            this.controleur.boutonPoints(t);
+        });
+        this.rbToutEffacer = new ToggleButton("Tout Effacer");
+        this.rbToutEffacer.setOnAction((t) -> {
+            this.controleur.boutonPoints(t);
+        });
+        this.rbSupprimer = new ToggleButton("Supprimer");
+        this.rbSupprimer.setOnAction((t) -> {
+            this.controleur.boutonPoints(t);
+        });
+        this.rbGrouper = new ToggleButton("Grouper");
+        this.rbGrouper.setOnAction((t) -> {
+            this.controleur.boutonGrouper(t);
+        });
 
         ToggleGroup bgEtat = new ToggleGroup();
         this.rbSelect.setToggleGroup(bgEtat);
         this.rbPoints.setToggleGroup(bgEtat);
         this.rbSegments.setToggleGroup(bgEtat);
+        this.rbTriangle.setToggleGroup(bgEtat);
+        this.rbAppui.setToggleGroup(bgEtat);
+        this.rbToutEffacer.setToggleGroup(bgEtat);
+        this.rbSupprimer.setToggleGroup(bgEtat);
+        this.rbGrouper.setToggleGroup(bgEtat);
+        
         this.rbPoints.setSelected(true);
 
-        VBox vbGauche = new VBox(this.rbSelect, this.rbPoints, this.rbSegments);
+        VBox vbGauche = new VBox(this.rbPoints, this.rbSegments, this.rbTriangle, this.rbAppui);
+        vbGauche.setSpacing(15);
+        vbGauche.setPadding(new Insets(20,20,15,15));
         this.setLeft(vbGauche);
 
-        this.bGrouper = new Button("Grouper");
-        this.bGrouper.setOnAction((t) -> {
-            this.controleur.boutonGrouper(t);
-        });
+        this.menu = new MainMenu(this);
+        
+        HBox hbTop = new HBox (this.rbSelect, this.rbGrouper, this.rbSupprimer, this.rbToutEffacer);
+        hbTop.setSpacing(15);
+        hbTop.setPadding(new Insets(20,20,15,15));
+        this.setTop (hbTop);
+        
+        VBox vbTop = new VBox (this.menu, hbTop);
+        this.setTop(vbTop);
+        
         this.cpCouleur = new ColorPicker(Color.BLACK);
         this.cpCouleur.setOnAction((t) -> {
             this.controleur.changeColor(this.cpCouleur.getValue());
         });
-        VBox vbDroit = new VBox(this.bGrouper, this.cpCouleur);
+
+        this.bZoomDouble = new Button("Zoom x2");
+        this.bZoomDouble.setOnAction((t) -> {
+            this.controleur.zoomDouble();
+        });
+        this.bZoomDemi = new Button("Zoom /2");
+        this.bZoomDemi.setOnAction((t) -> {
+            this.controleur.zoomDemi();
+        });
+        this.bZoomFitAll = new Button("Zoom Fit All");
+        this.bZoomFitAll.setOnAction((t) -> {
+            this.controleur.zoomFitAll();
+        });
+        VBox vbZoom = new VBox(this.bZoomDouble, this.bZoomDemi, this.bZoomFitAll);
+        vbZoom.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        VBox vbDroit = new VBox(this.cpCouleur, vbZoom);
         this.setRight(vbDroit);
 
         this.cDessin = new DessinCanvas(this);
         this.setCenter(this.cDessin);
+        
+        this.rbGrouper.setOnMouseEntered(e-> 
+        { rbGrouper.setStyle("-fx-background-color: yellow");
+        });
+        this.rbGrouper.setOnMouseExited(e-> 
+        { rbGrouper.setStyle("-fx-background-color:");
+        });
+        
+         this.rbSelect.setOnMouseEntered(e-> 
+        { rbSelect.setStyle("-fx-background-color: yellow");
+        });
+        this.rbSelect.setOnMouseExited(e-> 
+        { rbSelect.setStyle("-fx-background-color:");
+        });
+        
+         this.rbSupprimer.setOnMouseEntered(e-> 
+        { rbSupprimer.setStyle("-fx-background-color: yellow");
+        });
+        this.rbSupprimer.setOnMouseExited(e-> 
+        { rbSupprimer.setStyle("-fx-background-color:");
+        });
 
-        this.menu = new MainMenu(this);
-        this.setTop(this.menu);
+         this.rbToutEffacer.setOnMouseEntered(e-> 
+        { rbToutEffacer.setStyle("-fx-background-color: yellow");
+        });
+        this.rbToutEffacer.setOnMouseExited(e-> 
+        { rbToutEffacer.setStyle("-fx-background-color:");
+        });
+      
+        
 
         this.controleur.changeEtat(20);
 
+    }
+
+    public void fitAll() {
+        this.zoneModelVue = new RectangleHV(this.model.minX(),
+                this.model.maxX(), this.model.minY(), this.model.maxY());
+        this.zoneModelVue = this.zoneModelVue.scale(MULT_POUR_FIT_ALL);
     }
 
     public void redrawAll() {
@@ -120,7 +275,7 @@ public class MainPane extends BorderPane {
     public Groupe getModel() {
         return model;
     }
-
+    
     /**
      * @return the controleur
      */
@@ -131,7 +286,7 @@ public class MainPane extends BorderPane {
     /**
      * @return the rbSelect
      */
-    public RadioButton getRbSelect() {
+    public ToggleButton getRbSelect() {
         return rbSelect;
     }
 
@@ -152,8 +307,8 @@ public class MainPane extends BorderPane {
     /**
      * @return the bGrouper
      */
-    public Button getbGrouper() {
-        return bGrouper;
+    public ToggleButton getbGrouper() {
+        return rbGrouper;
     }
 
     /**
@@ -189,6 +344,55 @@ public class MainPane extends BorderPane {
      */
     public void setCurFile(File curFile) {
         this.curFile = curFile;
+    }
+
+    /**
+     * @return the MULT_POUR_FIT_ALL
+     */
+    public static double getMULT_POUR_FIT_ALL() {
+        return MULT_POUR_FIT_ALL;
+    }
+
+    /**
+     * @return the bZoomDouble
+     */
+    public Button getbZoomDouble() {
+        return bZoomDouble;
+    }
+
+    /**
+     * @return the bZoomDemi
+     */
+    public Button getbZoomDemi() {
+        return bZoomDemi;
+    }
+
+    /**
+     * @return the bZoomFitAll
+     */
+    public Button getbZoomFitAll() {
+        return bZoomFitAll;
+    }
+
+    /**
+     * @return the zoneModelVue
+     */
+    public RectangleHV getZoneModelVue() {
+        return zoneModelVue;
+    }
+
+    /**
+     * @return the menu
+     */
+    public MainMenu getMenu() {
+        return menu;
+    }
+
+    /**
+     * @param zoneModelVue the zoneModelVue to set
+     */
+    public void setZoneModelVue(RectangleHV zoneModelVue) {
+        this.zoneModelVue = zoneModelVue;
     }
 
 }

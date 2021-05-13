@@ -72,12 +72,14 @@ public class ZoneConstructible {
     
     
    //Exemple de main
-   /*public static void main(String[]args){
+   public static void main(String[]args){
         double p1=1;
         double p2=4;
         double p3=2;
         double p4=6;
        ZoneConstructible exemple = new ZoneConstructible(p1,p2,p3,p4);
         System.out.println(exemple.toString());
-    }*/
+    }
+    
+    
 }

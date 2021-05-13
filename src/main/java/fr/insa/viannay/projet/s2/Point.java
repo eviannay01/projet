@@ -13,17 +13,13 @@ import javafx.scene.paint.Color;
  * @author viann
  */
 public class Point {
-  private double x;
-  private double y;
+private double x;
+private double y;
 
    //Constructeur
     public Point(double x, double y) {
         this.x = x;
         this.y = y;
-    }
-
-    public Point(double px, double py, Color col) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     //getter et setter
@@ -47,5 +43,7 @@ public class Point {
     @Override
     public String toString() {
         return "("  + x + "; " + y + ")";
-    }  
-}
+    }
+        
+        
+        }

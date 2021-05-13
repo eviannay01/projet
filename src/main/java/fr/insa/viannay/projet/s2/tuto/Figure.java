@@ -18,7 +18,6 @@ along with CoursBeuvron.  If not, see <http://www.gnu.org/licenses/>.
  */
 package fr.insa.viannay.projet.s2.tuto;
 
-import fr.insa.viannay.projet.s2.tuto.gui.Numeroteur;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

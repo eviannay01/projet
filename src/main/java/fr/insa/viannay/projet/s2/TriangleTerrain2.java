@@ -1,8 +1,14 @@
 package fr.insa.viannay.projet.s2;
 
 
-import fr.insa.viannay.projet.s2.Segment;
-import fr.insa.viannay.projet.s2.Point;
+import fr.insa.viannay.projet.s2.tuto.Segment;
+import fr.insa.viannay.projet.s2.tuto.Point;
+import fr.insa.viannay.projet.s2.tuto.Point;
+import fr.insa.viannay.projet.s2.tuto.Segment;
+import javafx.scene.paint.Color;
+import java.io.IOException;
+import java.io.Writer;
+import javafx.scene.canvas.GraphicsContext;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,7 +21,7 @@ import fr.insa.viannay.projet.s2.Point;
  * @author viann
  */
 public class TriangleTerrain2 {
-     private int idTriangle;
+    private int idTriangle;
     private Point sommet1;
     private Point sommet2;
     private Point sommet3;
@@ -69,6 +75,23 @@ public class TriangleTerrain2 {
         this.sommet3 = sommet3;
     }
 
+    public Point getSommet(int indice){
+        Point sommet=null;
+        switch(indice){
+            case 1 : sommet = this.sommet1;
+            break;
+            case 2 : sommet = this.sommet2;
+            break;
+            case 3 : 
+            case 0 :
+                sommet = this.sommet3;
+            break;
+        }
+        return sommet;
+    }
+    
+    
+    
     //Affichage
 
     @Override
@@ -77,7 +100,7 @@ public class TriangleTerrain2 {
     }
     
     //Essai d'un main
-    /* public static void main(String[]args){
+     public static void main(String[]args){
         Point p1=new Point(0,6);
         Point p2=new Point(0,2);
         Point p3=new Point(1,3);
@@ -87,5 +110,7 @@ public class TriangleTerrain2 {
         System.out.println(exemple.toString());
         exemple.setSommet1(p4);
         System.out.println(exemple.toString());
-    }*/
+    }
+  
+     
 }
