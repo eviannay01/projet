@@ -48,7 +48,7 @@ public class MainPane extends BorderPane {
      * @return the rbTriangle
      */
     public RadioButton getRbTriangle() {
-        return rbTriangle;
+        return rbTriangleTerrain;
     }
 
     /**
@@ -104,8 +104,10 @@ public class MainPane extends BorderPane {
 
     
     private RadioButton rbPoints;
+    private RadioButton rbNoeud;
     private RadioButton rbSegments;
-    private RadioButton rbTriangle;
+    private RadioButton rbBarre;
+    private RadioButton rbTriangleTerrain;
     private RadioButton rbAppui;
     
     private ToggleButton rbToutEffacer;
@@ -151,11 +153,19 @@ public class MainPane extends BorderPane {
         this.rbSegments.setOnAction((t) -> {
             this.controleur.boutonSegments(t);
         });
-        this.rbTriangle = new RadioButton("Triangle");
-        this.rbTriangle.setOnAction((t) -> {
+        this.rbTriangleTerrain = new RadioButton("TriangleTerrain");
+        this.rbTriangleTerrain.setOnAction((t) -> {
             this.controleur.boutonSegments(t);
         });
-        this.rbAppui = new RadioButton("Appui");
+        this.rbNoeud = new RadioButton("Noeud");
+        this.rbNoeud.setOnAction((t) -> {
+            this.controleur.boutonPoints(t);
+        });
+         this.rbBarre = new RadioButton("Barre");
+        this.rbBarre.setOnAction((t) -> {
+            this.controleur.boutonSegments(t);
+        });
+         this.rbAppui = new RadioButton("Appui");
         this.rbAppui.setOnAction((t) -> {
             this.controleur.boutonPoints(t);
         });
@@ -176,7 +186,7 @@ public class MainPane extends BorderPane {
         this.rbSelect.setToggleGroup(bgEtat);
         this.rbPoints.setToggleGroup(bgEtat);
         this.rbSegments.setToggleGroup(bgEtat);
-        this.rbTriangle.setToggleGroup(bgEtat);
+        this.rbTriangleTerrain.setToggleGroup(bgEtat);
         this.rbAppui.setToggleGroup(bgEtat);
         this.rbToutEffacer.setToggleGroup(bgEtat);
         this.rbSupprimer.setToggleGroup(bgEtat);
@@ -184,7 +194,7 @@ public class MainPane extends BorderPane {
         
         this.rbPoints.setSelected(true);
 
-        VBox vbGauche = new VBox(this.rbPoints, this.rbSegments, this.rbTriangle, this.rbAppui);
+        VBox vbGauche = new VBox(this.rbPoints,this.rbNoeud, this.rbSegments,this.rbBarre, this.rbTriangleTerrain, this.rbAppui);
         vbGauche.setSpacing(15);
         vbGauche.setPadding(new Insets(20,20,15,15));
         this.setLeft(vbGauche);
@@ -217,7 +227,8 @@ public class MainPane extends BorderPane {
             this.controleur.zoomFitAll();
         });
         VBox vbZoom = new VBox(this.bZoomDouble, this.bZoomDemi, this.bZoomFitAll);
-        vbZoom.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        vbZoom.setSpacing(10);
+        vbZoom.setPadding(new Insets(10,10,10,10));
 
         VBox vbDroit = new VBox(this.cpCouleur, vbZoom);
         this.setRight(vbDroit);
@@ -226,33 +237,53 @@ public class MainPane extends BorderPane {
         this.setCenter(this.cDessin);
         
         this.rbGrouper.setOnMouseEntered(e-> 
-        { rbGrouper.setStyle("-fx-background-color: yellow");
+        { rbGrouper.setStyle("-fx-background-color: lightblue");
         });
         this.rbGrouper.setOnMouseExited(e-> 
         { rbGrouper.setStyle("-fx-background-color:");
         });
         
          this.rbSelect.setOnMouseEntered(e-> 
-        { rbSelect.setStyle("-fx-background-color: yellow");
+        { rbSelect.setStyle("-fx-background-color: lightblue");
         });
         this.rbSelect.setOnMouseExited(e-> 
         { rbSelect.setStyle("-fx-background-color:");
         });
         
          this.rbSupprimer.setOnMouseEntered(e-> 
-        { rbSupprimer.setStyle("-fx-background-color: yellow");
+        { rbSupprimer.setStyle("-fx-background-color: lightblue");
         });
         this.rbSupprimer.setOnMouseExited(e-> 
         { rbSupprimer.setStyle("-fx-background-color:");
         });
 
-         this.rbToutEffacer.setOnMouseEntered(e-> 
-        { rbToutEffacer.setStyle("-fx-background-color: yellow");
+        this.rbToutEffacer.setOnMouseEntered(e-> 
+        { rbToutEffacer.setStyle("-fx-background-color: lightblue");
         });
         this.rbToutEffacer.setOnMouseExited(e-> 
         { rbToutEffacer.setStyle("-fx-background-color:");
         });
       
+        this.bZoomDouble.setOnMouseEntered(e-> 
+        { bZoomDouble.setStyle("-fx-background-color: lightyellow");
+        });
+        this.bZoomDouble.setOnMouseExited(e-> 
+        { bZoomDouble.setStyle("-fx-background-color:");
+        });
+        
+        this.bZoomDemi.setOnMouseEntered(e-> 
+        { bZoomDemi.setStyle("-fx-background-color: lightyellow");
+        });
+        this.bZoomDemi.setOnMouseExited(e-> 
+        { bZoomDemi.setStyle("-fx-background-color:");
+        });
+        
+        this.bZoomFitAll.setOnMouseEntered(e-> 
+        { bZoomFitAll.setStyle("-fx-background-color: lightyellow");
+        });
+        this.bZoomFitAll.setOnMouseExited(e-> 
+        { bZoomFitAll.setStyle("-fx-background-color:");
+        });
         
 
         this.controleur.changeEtat(20);
