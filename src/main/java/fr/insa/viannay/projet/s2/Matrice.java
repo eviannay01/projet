@@ -186,7 +186,23 @@ public class Matrice {
            Matrice res = mFin.subCol(mFin.getNbrCol()/2, (mFin.getNbrCol()-1));
            return res;
        }
-       
+    //Multiplier 2 matrices
+    public Matrice multiplication(Matrice m2) {
+        if (this.getNbrCol() != m2.getNbrLig()) {
+            throw new Error("Tailles incompatibles pour multiplier les 2 matrices");
+        }
+        Matrice res = new Matrice(this.getNbrLig(), m2.getNbrCol());
+        for (int i = 0; i < res.getNbrLig(); i++) {
+            for (int j = 0; j < res.getNbrCol(); j++) {
+                double produit = 0;
+                for (int k = 0; k < this.getNbrCol(); k++) {
+                    produit = produit + this.getCoeff(i, k) * m2.getCoeff(k, j);
+                }
+                res.setCoeff(i, j, produit);
+            }
+        }
+        return res;
+    }
        
        public static void testInverse(){
         Matrice test = new Matrice(3,3);
