@@ -19,7 +19,7 @@ along with CoursBeuvron.  If not, see <http://www.gnu.org/licenses/>.
 package fr.insa.viannay.projet.s2.tuto.gui;
 
 
-import fr.insa.viannay.projet.s2.tuto.Groupe;
+import fr.insa.viannay.projet.s2.Groupe;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;

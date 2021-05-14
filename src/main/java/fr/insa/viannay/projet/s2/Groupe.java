@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with CoursBeuvron.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.insa.viannay.projet.s2.tuto;
+package fr.insa.viannay.projet.s2;
 
 import java.io.File;
 import java.io.IOException;
@@ -159,7 +159,7 @@ public class Groupe extends Figure {
         triangle.add(s1);
         triangle.add(s2);
         triangle.add(s3);
-        Groupe res = new Groupe();
+       Groupe res = new Groupe();
         res.add(p5);
         res.add(s4);
         res.add(triangle);
@@ -315,12 +315,12 @@ public class Groupe extends Figure {
         }
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
 //        test1();
 //        testMenu();
 //        exempleProblemeSauvegarde();
-        testLecture();
-    }
+       testLecture();
+    }*/
 
     /**
      * abscice maximale d'un groupe de figures. 0 si le groupe est vide.

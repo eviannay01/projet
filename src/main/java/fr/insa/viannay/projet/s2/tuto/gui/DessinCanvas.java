@@ -20,8 +20,8 @@ package fr.insa.viannay.projet.s2.tuto.gui;
 
 
 import com.sun.javafx.geom.transform.Identity;
-import fr.insa.viannay.projet.s2.tuto.Figure;
-import fr.insa.viannay.projet.s2.tuto.Groupe;
+import fr.insa.viannay.projet.s2.Figure;
+import fr.insa.viannay.projet.s2.Groupe;
 import java.util.List;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

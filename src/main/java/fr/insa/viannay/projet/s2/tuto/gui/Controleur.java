@@ -19,10 +19,10 @@ along with CoursBeuvron.  If not, see <http://www.gnu.org/licenses/>.
 package fr.insa.viannay.projet.s2.tuto.gui;
 
 
-import fr.insa.viannay.projet.s2.tuto.Point;
-import fr.insa.viannay.projet.s2.tuto.Figure;
-import fr.insa.viannay.projet.s2.tuto.Groupe;
-import fr.insa.viannay.projet.s2.tuto.Segment;
+import fr.insa.viannay.projet.s2.Point;
+import fr.insa.viannay.projet.s2.Figure;
+import fr.insa.viannay.projet.s2.Groupe;
+import fr.insa.viannay.projet.s2.Segment;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

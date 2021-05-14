@@ -19,7 +19,7 @@ along with CoursBeuvron.  If not, see <http://www.gnu.org/licenses/>.
 package fr.insa.viannay.projet.s2.tuto.gui;
 
 
-import fr.insa.viannay.projet.s2.tuto.Groupe;
+import fr.insa.viannay.projet.s2.Groupe;
 import java.io.File;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -102,11 +102,10 @@ public class MainPane extends BorderPane {
     private Stage inStage;
     private File curFile;
 
-    
-    private RadioButton rbPoints;
     private RadioButton rbNoeud;
-    private RadioButton rbSegments;
     private RadioButton rbBarre;
+    private RadioButton rbPoints;
+    private RadioButton rbSegments;
     private RadioButton rbTriangleTerrain;
     private RadioButton rbAppui;
     
@@ -114,6 +113,7 @@ public class MainPane extends BorderPane {
     private ToggleButton rbSupprimer;
     private ToggleButton rbSelect;
     private ToggleButton rbGrouper;
+    private ToggleButton rbTerrain;
     
     private ColorPicker cpCouleur;
 
@@ -145,14 +145,7 @@ public class MainPane extends BorderPane {
         this.rbSelect.setOnAction((t) -> {
             this.controleur.boutonSelect(t);
         });
-        this.rbPoints = new RadioButton("Points");
-        this.rbPoints.setOnAction((t) -> {
-            this.controleur.boutonPoints(t);
-        });
-        this.rbSegments = new RadioButton("Segments");
-        this.rbSegments.setOnAction((t) -> {
-            this.controleur.boutonSegments(t);
-        });
+      
         this.rbTriangleTerrain = new RadioButton("TriangleTerrain");
         this.rbTriangleTerrain.setOnAction((t) -> {
             this.controleur.boutonSegments(t);
@@ -160,6 +153,14 @@ public class MainPane extends BorderPane {
         this.rbNoeud = new RadioButton("Noeud");
         this.rbNoeud.setOnAction((t) -> {
             this.controleur.boutonPoints(t);
+        });
+        this.rbPoints = new RadioButton("Point");
+        this.rbPoints.setOnAction((t) -> {
+            this.controleur.boutonPoints(t);
+        });
+        this.rbSegments = new RadioButton("Segment");
+        this.rbSegments.setOnAction((t) -> {
+            this.controleur.boutonSegments(t);
         });
          this.rbBarre = new RadioButton("Barre");
         this.rbBarre.setOnAction((t) -> {
@@ -181,11 +182,13 @@ public class MainPane extends BorderPane {
         this.rbGrouper.setOnAction((t) -> {
             this.controleur.boutonGrouper(t);
         });
+        this.rbTerrain = new ToggleButton("Terrain Simple");
+        this.rbTerrain.setOnAction((t) -> {
+            this.controleur.boutonGrouper(t);
+        });
 
         ToggleGroup bgEtat = new ToggleGroup();
         this.rbSelect.setToggleGroup(bgEtat);
-        this.rbPoints.setToggleGroup(bgEtat);
-        this.rbSegments.setToggleGroup(bgEtat);
         this.rbTriangleTerrain.setToggleGroup(bgEtat);
         this.rbAppui.setToggleGroup(bgEtat);
         this.rbToutEffacer.setToggleGroup(bgEtat);
@@ -194,7 +197,7 @@ public class MainPane extends BorderPane {
         
         this.rbPoints.setSelected(true);
 
-        VBox vbGauche = new VBox(this.rbPoints,this.rbNoeud, this.rbSegments,this.rbBarre, this.rbTriangleTerrain, this.rbAppui);
+        VBox vbGauche = new VBox(this.rbNoeud,this.rbBarre,this.rbPoints,this.rbSegments, this.rbTriangleTerrain, this.rbAppui);
         vbGauche.setSpacing(15);
         vbGauche.setPadding(new Insets(20,20,15,15));
         this.setLeft(vbGauche);
@@ -230,7 +233,8 @@ public class MainPane extends BorderPane {
         vbZoom.setSpacing(10);
         vbZoom.setPadding(new Insets(10,10,10,10));
 
-        VBox vbDroit = new VBox(this.cpCouleur, vbZoom);
+        VBox vbDroit = new VBox(this.cpCouleur, vbZoom, this.rbTerrain);
+        vbDroit.setPadding(new Insets(0,10,0,0));
         this.setRight(vbDroit);
 
         this.cDessin = new DessinCanvas(this);
@@ -284,6 +288,12 @@ public class MainPane extends BorderPane {
         this.bZoomFitAll.setOnMouseExited(e-> 
         { bZoomFitAll.setStyle("-fx-background-color:");
         });
+        this.rbTerrain.setOnMouseEntered(e-> 
+        { rbTerrain.setStyle("-fx-background-color: #ffb3b3");
+        });
+        this.rbTerrain.setOnMouseExited(e-> 
+        { rbTerrain.setStyle("-fx-background-color:");
+        });
         
 
         this.controleur.changeEtat(20);
@@ -307,6 +317,7 @@ public class MainPane extends BorderPane {
         return model;
     }
     
+    
     /**
      * @return the controleur
      */
@@ -319,20 +330,6 @@ public class MainPane extends BorderPane {
      */
     public ToggleButton getRbSelect() {
         return rbSelect;
-    }
-
-    /**
-     * @return the rbPoints
-     */
-    public RadioButton getRbPoints() {
-        return rbPoints;
-    }
-
-    /**
-     * @return the rbSegments
-     */
-    public RadioButton getRbSegments() {
-        return rbSegments;
     }
 
     /**
@@ -405,6 +402,19 @@ public class MainPane extends BorderPane {
         return bZoomFitAll;
     }
 
+     /**
+     * @return the rbPoints
+     */
+    public RadioButton getRbPoints() {
+        return rbPoints;
+    }
+
+    /**
+     * @return the rbSegments
+     */
+    public RadioButton getRbSegments() {
+        return rbSegments;
+    }
     /**
      * @return the zoneModelVue
      */

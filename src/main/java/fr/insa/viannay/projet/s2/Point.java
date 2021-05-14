@@ -1,49 +1,129 @@
+
 package fr.insa.viannay.projet.s2;
 
+import java.io.IOException;
+import java.io.Writer;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import recup.Lire;
 
 /**
  *
- * @author viann
+ * @author francois
  */
-public class Point {
-private double x;
-private double y;
+public class Point extends FigureSimple {
+    
+    public static double RAYON_IN_DRAW = 5;
 
-   //Constructeur
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
+    private double px;
+    private double py;
+
+    public Point(double px, double py, Color couleur) {
+        super(couleur);
+        this.px = px;
+        this.py = py;
     }
 
-    //getter et setter
-    public double getX() {
-        return x;
+    public Point(double px, double py) {
+        this(px, py, Color.BLACK);
     }
 
-    public double getY() {
-        return y;
+    public Point() {
+        this(0, 0);
     }
 
-    public void setX(double x) {
-        this.x = x;
+    /**
+     * @return the px
+     */
+    public double getPx() {
+        return px;
     }
 
-    public void setY(double y) {
-        this.y = y;
+    /**
+     * @param px the px to set
+     */
+    public void setPx(double px) {
+        this.px = px;
     }
 
-    //Affichage
+    /**
+     * @return the py
+     */
+    public double getPy() {
+        return py;
+    }
+
+    /**
+     * @param py the py to set
+     */
+    public void setPy(double py) {
+        this.py = py;
+    }
+
     @Override
     public String toString() {
-        return "("  + x + "; " + y + ")";
+        return "(" + px + "," + py + ')';
     }
-        
-        
+
+    public static Point demandePoint() {
+        System.out.println("abscisse : ");
+        double px = Lire.d();
+        System.out.println("ordonnée : ");
+        double py = Lire.d();
+        return new Point(px, py);
+    }
+
+    @Override
+    public double maxX() {
+        return this.px;
+    }
+
+    @Override
+    public double minX() {
+        return this.px;
+    }
+
+    @Override
+    public double maxY() {
+        return this.py;
+    }
+
+    @Override
+    public double minY() {
+        return this.py;
+    }
+
+    @Override
+    public double distancePoint(Point p) {
+        double dx = this.px - p.px;
+        double dy = this.py - p.py;
+        return Math.sqrt(dx*dx+dy*dy);
+
+    }
+
+    @Override
+    public void dessine(GraphicsContext context) {
+        context.setFill(this.getCouleur());
+        context.fillOval(this.px-RAYON_IN_DRAW, this.py-RAYON_IN_DRAW, 2*RAYON_IN_DRAW, 2*RAYON_IN_DRAW);
+    }
+
+    @Override
+    public void dessineSelection(GraphicsContext context) {
+        context.setFill(Figure.COULEUR_SELECTION);
+        context.fillOval(this.px-RAYON_IN_DRAW, this.py-RAYON_IN_DRAW, 2*RAYON_IN_DRAW, 2*RAYON_IN_DRAW);
+    }
+
+    @Override
+    public void save(Writer w, Numeroteur<Figure> num) throws IOException {
+        if(! num.objExist(this)) {
+            int id = num.creeID(this);
+            w.append("Point;"+id+";"+this.px+";"+this.py+
+                    ";" + FigureSimple.saveColor(this.getCouleur()) + "\n");
         }
+    }
+
+    public double getX() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+}
